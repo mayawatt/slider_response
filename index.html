@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Beta</title>
+    <title>slider-response</title>
    <script src="jspsych-6.0.5/jspsych.js"></script>
     <script src="jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="jspsych-6.0.5/plugins/jspsych-html-slider-response.js"></script>
@@ -10,10 +10,8 @@
   </head>
   <body></body>
   <script>
-
     //create timeline
     var timeline = [];
-
    
     //welcome message and instructions
     var welcome = {
@@ -22,7 +20,6 @@
       "<p style = 'font-size: 12px;'><strong>Press any key to continue.</strong></p>"
     };
     timeline.push(welcome);
-
     var instructions = {
       type: "html-keyboard-response",
       stimulus: "<p>In this experiment, you'll be given two words in the following format:</p>" +
@@ -33,7 +30,6 @@
           "<p style = 'font-size: 12px;'><strong>Press any key to begin.</strong></p>",post_trial_gap: 1250
     };
     timeline.push(instructions);
-
     
     //test stimuli data. Separated into 5 groups depending on inflection class (test_stimuli_one is all stimuli with an inflection class between 0 and 10, test_stimuli_two between 10 and 20, etc.)
     var test_stimuli_one = [
@@ -123,7 +119,6 @@
 { stimulus: "<p>The past tense of <strong>vie</strong> was <strong>vaught</strong><br><br><br>" },
 { stimulus: "<p>The past tense of <strong>yell</strong> was <strong>yold</strong><br><br><br>" },
     ];
-
     var test_stimuli_two = [
 { stimulus: "<p>The past tense of <strong>abide</strong> was <strong>abode</strong><br><br><br>" },
 { stimulus: "<p>The past tense of <strong>abide</strong> was <strong>abite</strong><br><br><br>" },
@@ -735,7 +730,6 @@
 { stimulus: "<p>The past tense of <strong>yield</strong> was <strong>yoald</strong><br><br><br>" },
 { stimulus: "<p>The past tense of <strong>yield</strong> was <strong>yielt</strong><br><br><br>" },
     ];
-
     var test_stimuli_three = [
 { stimulus: "<p>The past tense of <strong>abet</strong> was <strong>abot</strong><br><br><br>" },
 { stimulus: "<p>The past tense of <strong>abide</strong> was <strong>abid</strong><br><br><br>" },
@@ -894,7 +888,6 @@
 { stimulus: "<p>The past tense of <strong>write</strong> was <strong>rought</strong><br><br><br>" },
 { stimulus: "<p>The past tense of <strong>write</strong> was <strong>writ</strong><br><br><br>" },
     ];
-
     var test_stimuli_four = [
 { stimulus: "<p>The past tense of <strong>accuse</strong> was <strong>accyost</strong><br><br><br>" },
 { stimulus: "<p>The past tense of <strong>ache</strong> was <strong>uche</strong><br><br><br>" },
@@ -1064,7 +1057,6 @@
 { stimulus: "<p>The past tense of <strong>wrinkle</strong> was <strong>wrankle</strong><br><br><br>" },
 { stimulus: "<p>The past tense of <strong>yank</strong> was <strong>yunk</strong><br><br><br>" },
     ];
-
     var test_stimuli_five = [
 { stimulus: "<p>The past tense of <strong>abet</strong> was <strong>abet</strong><br><br><br>" },
 { stimulus: "<p>The past tense of <strong>abet</strong> was <strong>abet</strong><br><br><br>" },
@@ -1219,7 +1211,6 @@
 { stimulus: "<p>The past tense of <strong>wet</strong> was <strong>wet</strong><br><br><br>" },
 { stimulus: "<p>The past tense of <strong>wink</strong> was <strong>waught</strong><br><br><br>" },
     ];
-
     
     //randomly selecting stimuli from each group, proportinal to the size of the groups. There are 85 in group 1, 609 in group 2, 156 in group 3, 167 in group 4, and 152 in group 5.
     var sample_one = jsPsych.randomization.sampleWithoutReplacement(test_stimuli_one, 1);
@@ -1233,10 +1224,9 @@
     var test = {
       type: 'html-slider-response',
       stimulus: jsPsych.timelineVariable('stimulus'),
-      labels: ['Definitely false', 'Definitely true'],
+      labels: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+      max: 4
     };
-
-
     //creating the individual trials and pushing them onto the timeline
     var trial_one = {
       timeline: [test],
@@ -1244,36 +1234,30 @@
       randomize_order: true,
     }
     timeline.push(trial_one);
-
     var trial_two = {
       timeline: [test],
       timeline_variables: sample_two,
       randomize_order: true,
     }
     timeline.push(trial_two);
-
     var trial_three = {
       timeline: [test],
       timeline_variables: sample_three,
       randomize_order: true,
     }
     timeline.push(trial_three);
-
     var trial_four = {
       timeline: [test],
       timeline_variables: sample_four,
       randomize_order: true,
     }
     timeline.push(trial_four);
-
     var trial_five = {
       timeline: [test],
       timeline_variables: sample_five,
       randomize_order: true,
     }
     timeline.push(trial_five);
-
-
     //displaying a goodbye message and pushing onto the timeline
     var goodbye = {
       type: "html-keyboard-response",
