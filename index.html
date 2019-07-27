@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>slider-response</title>
-   <script src="jspsych-6.0.5/jspsych.js"></script>
+    <title>slider response</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="jspsych-6.0.5/jspsych.js"></script>
     <script src="jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js"></script>
     <script src="jspsych-6.0.5/plugins/jspsych-html-slider-response.js"></script>
     <script src="jspsych-6.0.5/plugins/jspsych-call-function.js"></script>
     <link href="jspsych-6.0.5/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-database.js"></script>
   </head>
-  <body></body>
+  <body>
+    <pre id="participant"></pre>
+    <script src="app.js"></script>
+  </body>
   <script>
+
+    var database = firebase.database();
+
     //create timeline
     var timeline = [];
    
@@ -20,6 +30,8 @@
       "<p style = 'font-size: 12px;'><strong>Press any key to continue.</strong></p>"
     };
     timeline.push(welcome);
+
+
     var instructions = {
       type: "html-keyboard-response",
       stimulus: "<p>In this experiment, you'll be given two words in the following format:</p>" +
@@ -1266,17 +1278,45 @@
     };
     timeline.push(goodbye);
     
-    function saveData(name, data){
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'write_data.php'); // 'write_data.php' is the path to the php file described above.
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.send(JSON.stringify({filename: name, filedata: data}));
+    function makeid(){
+      var text = "";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      return text;
     }
-    
-    //initializing the timeline and displaying the data after all trials have executed
+
+    function saveToFirebase(code, filedata){
+      var ref = firebase.database().ref(code).set(filedata);
+    }
+
+    function writeUserData(code) {
+      firebase.database().ref('users/' + code).set({
+      //User ID: code,
+      data: jsPsych.data.get().csv(),
+      participantID: code
+      });
+    }
+
+    //var code = makeid();
+
+    var submit_block = {
+      type: "html-keyboard-response",
+      stimulus: "<p>Press any key to submit data.</p>",
+      timing_response: .001,      
+      timing_post_trial: 0,
+      on_finish: function() {
+        var code = makeid();
+        jsPsych.data.displayData();
+        writeUserData(code);
+      }
+    }
+    timeline.push(submit_block);
+
     jsPsych.init({
-      timeline: timeline,
-      on_finish: function(){ saveData("experiment_data", jsPsych.data.get().csv()); }
+      timeline: timeline
+      //on_finish: function() {
+      //}
     });
   
   </script>
