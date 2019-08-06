@@ -1245,6 +1245,7 @@
       timeline: [test],
       timeline_variables: sample_one,
       randomize_order: true,
+      phase: 'experiment',
     }
     timeline.push(trial_one);
     var trial_two = {
@@ -1291,7 +1292,7 @@
     }
 
     function writeUserData(code) {
-      var correct_trials = jsPsych.data.get().filter({phase: 'test'}).csv();
+      var correct_trials = jsPsych.data.get().filter({phase: 'experiment'}).csv();
       firebase.database().ref('users/' + code).set({
       //User ID: code,
       //data: jsPsych.data.get().csv(),
