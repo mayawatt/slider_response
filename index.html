@@ -1246,31 +1246,37 @@
       timeline_variables: sample_one,
       randomize_order: true,
     }
-    timeline.push(trial_one);
+    //timeline.push(trial_one);
     var trial_two = {
       timeline: [test],
       timeline_variables: sample_two,
       randomize_order: true,
     }
-    timeline.push(trial_two);
+    //timeline.push(trial_two);
     var trial_three = {
       timeline: [test],
       timeline_variables: sample_three,
       randomize_order: true,
     }
-    timeline.push(trial_three);
+    //timeline.push(trial_three);
     var trial_four = {
       timeline: [test],
       timeline_variables: sample_four,
       randomize_order: true,
     }
-    timeline.push(trial_four);
+    //timeline.push(trial_four);
     var trial_five = {
       timeline: [test],
       timeline_variables: sample_five,
       randomize_order: true,
     }
-    timeline.push(trial_five);
+    //timeline.push(trial_five);
+
+    var array = [trial_one, trial_two, trial_three, trial_four, trial_five];
+    var shuffledArray = jsPsych.randomization.shuffle(array);
+
+    timeline.push(shuffledArray);
+
     //displaying a goodbye message and pushing onto the timeline
     var goodbye = {
       type: "html-keyboard-response",
@@ -1290,8 +1296,7 @@
       firebase.database().ref('users/' + code).set({
       //User ID: code,
       data: jsPsych.data.get().csv(),
-      interactionData: jsPsych.data.getInteractionData().csv(),
-      participantID: code
+      interactionData: jsPsych.data.getInteractionData().csv()
       });
     }
 
