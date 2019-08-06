@@ -1294,7 +1294,7 @@
       firebase.database().ref('users/' + code).set({
       //User ID: code,
       data: jsPsych.data.get().csv(),
-      interactionData: jsPsych.data.getInteractionData().csv(),
+      interactionData: jsPsych.data.getInteractionData().json(),
       participantID: code
       });
     }
