@@ -1291,6 +1291,7 @@
     }
 
     function writeUserData(code) {
+      var correct_trials = jsPsych.data.get().filter({phase: 'test'});
       firebase.database().ref('users/' + code).set({
       //User ID: code,
       //data: jsPsych.data.get().csv(),
@@ -1309,7 +1310,6 @@
       timing_post_trial: 0,
       on_finish: function() {
         var code = makeid();
-        var correct_trials = jsPsych.data.get().filter({phase: 'test'});
         jsPsych.data.displayData();
         writeUserData(code);
       }
