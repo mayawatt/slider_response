@@ -1291,11 +1291,11 @@
     }
 
     function writeUserData(code) {
-      var correct_trials = jsPsych.data.get().filter({phase: 'test'});
+      var correct_trials = jsPsych.data.get().filter({phase: 'test'}).csv();
       firebase.database().ref('users/' + code).set({
       //User ID: code,
       //data: jsPsych.data.get().csv(),
-      data: correct_trials.csv(),
+      data: correct_trials,
       interactionData: jsPsych.data.getInteractionData().csv(),
       participantID: code
       });
