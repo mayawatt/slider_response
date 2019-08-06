@@ -1293,8 +1293,9 @@
     function writeUserData(code) {
       firebase.database().ref('users/' + code).set({
       //User ID: code,
-      data: jsPsych.data.get().csv(),
-      interactionData: jsPsych.data.getInteractionData().json(),
+      //data: jsPsych.data.get().csv(),
+      data: correct_trials.csv(),
+      interactionData: jsPsych.data.getInteractionData().csv(),
       participantID: code
       });
     }
@@ -1308,6 +1309,7 @@
       timing_post_trial: 0,
       on_finish: function() {
         var code = makeid();
+        var correct_trials = jsPsych.data.get().filter({phase: 'test'});
         jsPsych.data.displayData();
         writeUserData(code);
       }
