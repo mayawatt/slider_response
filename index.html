@@ -1245,7 +1245,6 @@
       timeline: [test],
       timeline_variables: sample_one,
       randomize_order: true,
-      phase: experiment,
     }
     timeline.push(trial_one);
     var trial_two = {
@@ -1280,11 +1279,7 @@
     timeline.push(goodbye);
     
     function makeid(){
-      var id = "";
-      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      for( var i=0; i < 5; i++ )
-        id += possible.charAt(Math.floor(Math.random() * possible.length));
-      return id;
+     return jsPsych.randomization.randomID(5);
     }
 
     function saveToFirebase(code, filedata){
@@ -1292,11 +1287,9 @@
     }
 
     function writeUserData(code) {
-      var correct_trials = jsPsych.data.get().filter({phase: 'experiment'}).csv();
       firebase.database().ref('users/' + code).set({
       //User ID: code,
-      //data: jsPsych.data.get().csv(),
-      data: correct_trials,
+      data: jsPsych.data.get().csv(),
       interactionData: jsPsych.data.getInteractionData().csv(),
       participantID: code
       });
