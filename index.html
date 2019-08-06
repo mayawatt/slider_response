@@ -1279,11 +1279,11 @@
     timeline.push(goodbye);
     
     function makeid(){
-      var text = "";
+      var id = "";
       var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       for( var i=0; i < 5; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-      return text;
+        id += possible.charAt(Math.floor(Math.random() * possible.length));
+      return id;
     }
 
     function saveToFirebase(code, filedata){
@@ -1294,6 +1294,7 @@
       firebase.database().ref('users/' + code).set({
       //User ID: code,
       data: jsPsych.data.get().csv(),
+      interaction data: jsPsych.data.getInteractionData();
       participantID: code
       });
     }
