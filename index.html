@@ -37,7 +37,7 @@
       stimulus: "<p>In this experiment, you'll be given two words in the following format:</p>" +
           "<p>The past tense of <strong>help</strong> was once <strong>holp</strong></p>" +
           "<br>How likely do you think it is that the above statement is true?</p>" +
-          "<p>Use the <strong>slider response bar</strong> to answer. <strong>5</strong> being <strong>highly likely</strong> and <strong>1</strong> being <strong>highly unlikely</strong>.</p>" +
+          "<p>Use the <strong>slider response bar</strong> to answer. <strong>Five</strong> being <strong>highly likely</strong> and <strong>one</strong> being <strong>highly unlikely</strong>.</p>" +
           "<br>If you don't recognize the verb, use your best judgement.</br>" +
           "<p style = 'font-size: 12px;'><strong>Press any key to begin.</strong></p>",post_trial_gap: 1250
     };
@@ -1237,8 +1237,9 @@
       type: 'html-slider-response',
       stimulus: jsPsych.timelineVariable('stimulus'),
       prompt: "<br style = 'font-size: 12px;'><strong>Prompt: </strong>How likely do you think it is that the above statement is true?</p>",
-      labels: ["1" + "<p>Highly Unlikely</p>", "2", "3", "4", "5" + "<p>Highly Likely</p>"],
-      max: 4
+      labels: ["1" + "<p>Highly Unlikely</p>", "2", "3" + "<p>Neutral<p>", "4", "5" + "<p>Highly Likely</p>"],
+      max: 4,
+      start: 2
     };
     //creating the individual trials and pushing them onto the timeline
     var trial_one = {
@@ -1275,14 +1276,11 @@
     var array = [trial_one, trial_two, trial_three, trial_four, trial_five];
     var shuffledArray = jsPsych.randomization.shuffle(array);
 
-    timeline.push(shuffledArray);
-
-    //displaying a goodbye message and pushing onto the timeline
-    var goodbye = {
-      type: "html-keyboard-response",
-      stimulus: "<strong>Congratulations!</strong>" + "<p>You've completed the experiment.</p>" + "<br>Thank you for your participation.</p>"
-    };
-    timeline.push(goodbye);
+    timeline.push(shuffledArray[0]);
+    timeline.push(shuffledArray[1]);
+    timeline.push(shuffledArray[2]);
+    timeline.push(shuffledArray[3]);
+    timeline.push(shuffledArray[4]);
     
     function makeid(){
      return jsPsych.randomization.randomID(5);
@@ -1304,12 +1302,11 @@
 
     var submit_block = {
       type: "html-keyboard-response",
-      stimulus: "<p>Press any key to submit data.</p>",
+      stimulus: "<strong>Congratulations!</strong>" + "<p>You've completed the experiment.</p>" + "<br>Thank you for your participation.</p>" + "<p style = 'font-size: 12px;'><strong>Press any key to submit data.</strong></p>",
       timing_response: .001,      
       timing_post_trial: 0,
       on_finish: function() {
         var code = makeid();
-        jsPsych.data.displayData();
         writeUserData(code);
       }
     }
